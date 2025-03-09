@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <title>Login et Inscription | Aigles</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="container">
+        <input type="checkbox" id="flip">
+        <div class="cover">
+            <div class="front">
+                <img src="assets/intern.jpg" >
+                <div class="text">
+                    <!--<span class="text-1">OpportuFind<br> </span><br>
+                  <span class="text-2">Trouver l'opportunité qui façonnera votre avenir</span>-->
+                </div>
+            </div>
+            <div class="back">
+                <div class="text">
+                    <h2 class="b">Aigles</h2>
+                    <br>
+                    <span class="text-2">Aigles est votre application innovante qui rend vos tâches quotidiennes plus simples et rapides grâce à la technologie de lecture des codes QR.</span>
+                </div>
+            </div>
+        </div>
+        <div class="forms">
+            <div class="form-content">
+                <!-- Formulaire de connexion -->
+                <div class="login-form">
+                    <div class="title">Se connecter</div>
+                    <form [formGroup]="loginForm" (ngSubmit)="Login()">
+                        <div class="input-boxes">
+                            <div class="input-box">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" formControlName="email" placeholder="Veuillez saisir votre email" />
+                                <div *ngIf="submitted && formControls['email'].errors">
+                                    <small *ngIf="formControls['email'].errors?.['required']" class="error-text">L'email est requis</small>
+                                    <small *ngIf="formControls['email'].errors?.['email']" class="error-text">L'email n'est pas valide</small>
+                                </div>
+                            </div>
+                            <div class="input-box">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" formControlName="password" placeholder="Veuillez saisir votre mot de passe" />
+                                <div *ngIf="submitted && formControls['password'].errors">
+                                    <small *ngIf="formControls['password'].errors?.['required']" class="error-text">Le mot de passe est requis</small>
+                                    <small *ngIf="formControls['password'].errors?.['minlength']" class="error-text">Le mot de passe doit contenir au moins 4 caractères</small>
+                                </div>
+                            </div>
+                            <div class="button input-box">
+                                <input type="submit" value="Se connecter" />
+                            </div>
+                            <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+                            <div class="text sign-up-text"> <br><br><br><label for="flip">Créer un compte</label></div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Formulaire d'inscription -->
+                <div class="signup-form">
+                    <div class="title">S'inscrire</div>
+                    <form [formGroup]="signupForm" (ngSubmit)="OnSignUpSubmit()">
+                        <div class="input-boxes">
+                            <div class="input-box">
+                                <i class="fas fa-user"></i>
+                                <input type="text" formControlName="name" placeholder="Veuillez saisir votre nom" required />
+                            </div>
+                            <div class="input-box">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" formControlName="email" placeholder="Veuillez saisir votre email" required />
+                            </div>
+                            <div class="input-box">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" formControlName="password" placeholder="Veuillez saisir votre mot de passe" required />
+                            </div>
+                            <div class="input-box">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" formControlName="confirmPassword" placeholder="Confirmer votre mot de passe" required />
+                            </div>
+                            Vous êtes :
+                            <div class="form-check-container custom-margin-left">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="userType" id="entrepreneur" value="entrepreneur" [(ngModel)]="userType">
+                                    <label class="form-check-label" for="entrepreneur">Entrepreneur</label>
+                                </div>
+                                <div class="form-check custom-margin-left">
+                                    <input class="form-check-input" type="radio" name="userType" id="etudiant" value="etudiant" [(ngModel)]="userType">
+                                    <label class="form-check-label" for="etudiant">Étudiant</label>
+                                </div>
+                            </div>
+                            
+                            <!-- Affichage des champs spécifiques -->
+                            <div *ngIf="userType === 'entrepreneur'">
+                                <div class="input-box">
+                                    <i class="fas fa-building"></i>
+                                    <input type="text" formControlName="companyName" placeholder="Nom de l'entreprise" />
+                                </div>
+                            </div>
+                            
+                            <div *ngIf="userType === 'etudiant'">
+                                <div class="input-box">
+                                    <i class="fas fa-school"></i>
+                                    <input type="text" formControlName="university" placeholder="Université" />
+                                </div>
+                            </div>
+                            
+                            <!-- Display the selected option immediately -->
+                            <div *ngIf="userType">
+                                <h3>You selected: {{ userType === 'entrepreneur' ? 'Entrepreneur' : 'Étudiant' }}</h3>
+                            </div>
+                            <div class="button input-box">
+                                <input type="submit" value="Suivant" />
+                            </div>
+                            <div class="text sign-up-text">Vous avez déjà un compte ? <label for="flip">Se connecter</label></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
