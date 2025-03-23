@@ -70,21 +70,24 @@
             </div>
         </nav>
         <!-- Navbar End -->
+    <!-- PrimeNG Toast Component -->
+    <p-toast></p-toast>
+
     <div class="container">
         <input type="checkbox" id="flip">
         <div class="cover">
             <div class="front">
-                <img src="assets/intern.jpg" >
+                <img src="assets/intern.jpg">
                 <div class="text">
                     <!--<span class="text-1">OpportuFind<br> </span><br>
-                  <span class="text-2">Trouver l'opportunité qui façonnera votre avenir</span>-->
+                  <span class="text-2">Trouver l'opportunité qui façonnera votre avenir</span>-->
                 </div>
             </div>
             <div class="back">
                 <div class="text">
-                    <h2 class="b">Aigles</h2>
+                    <h2 class="b">OpportuFind</h2>
                     <br>
-                    <span class="text-2">Aigles est votre application innovante qui rend vos tâches quotidiennes plus simples et rapides grâce à la technologie de lecture des codes QR.</span>
+                  <span class="text-2">Trouver l'opportunité qui façonnera votre avenir</span>
                 </div>
             </div>
         </div>
@@ -99,23 +102,28 @@
                                 <i class="fas fa-envelope"></i>
                                 <input type="email" formControlName="email" placeholder="Veuillez saisir votre email" />
                                 <div *ngIf="submitted && formControls['email'].errors">
-                                    <small *ngIf="formControls['email'].errors?.['required']" class="error-text">L'email est requis</small>
-                                    <small *ngIf="formControls['email'].errors?.['email']" class="error-text">L'email n'est pas valide</small>
+                                    <small *ngIf="formControls['email'].errors?.['required']" class="error-text">L'email
+                                        est requis</small>
+                                    <small *ngIf="formControls['email'].errors?.['email']" class="error-text">L'email
+                                        n'est pas valide</small>
                                 </div>
                             </div>
                             <div class="input-box">
                                 <i class="fas fa-lock"></i>
-                                <input type="password" formControlName="password" placeholder="Veuillez saisir votre mot de passe" />
+                                <input type="password" formControlName="password"
+                                    placeholder="Veuillez saisir votre mot de passe" />
                                 <div *ngIf="submitted && formControls['password'].errors">
-                                    <small *ngIf="formControls['password'].errors?.['required']" class="error-text">Le mot de passe est requis</small>
-                                    <small *ngIf="formControls['password'].errors?.['minlength']" class="error-text">Le mot de passe doit contenir au moins 4 caractères</small>
+                                    <small *ngIf="formControls['password'].errors?.['required']" class="error-text">Le
+                                        mot de passe est requis</small>
+                                    <small *ngIf="formControls['password'].errors?.['minlength']" class="error-text">Le
+                                        mot de passe doit contenir au moins 4 caractères</small>
                                 </div>
                             </div>
                             <div class="button input-box">
                                 <input type="submit" value="Se connecter" />
                             </div>
                             <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
-                            <div class="text sign-up-text"> <br><br><br><label for="flip">Créer un compte</label></div>
+                            <div class="text sign-up-text"> <br><br><br><label for="flip">Créer un compte</label></div>
                         </div>
                     </form>
                 </div>
@@ -127,55 +135,110 @@
                         <div class="input-boxes">
                             <div class="input-box">
                                 <i class="fas fa-user"></i>
-                                <input type="text" formControlName="name" placeholder="Veuillez saisir votre nom" required />
+                                <input type="text" formControlName="fullName" placeholder="Veuillez saisir votre nom"
+                                    required />
+                                <div *ngIf="submitted && signupForm.get('fullName')?.errors">
+                                    <small *ngIf="signupForm.get('fullName')?.errors?.['required']" class="error-text">Le nom est requis</small>
+                                </div>
                             </div>
                             <div class="input-box">
                                 <i class="fas fa-envelope"></i>
-                                <input type="email" formControlName="email" placeholder="Veuillez saisir votre email" required />
+                                <input type="email" formControlName="email" placeholder="Veuillez saisir votre email"
+                                    required />
+                                <div *ngIf="submitted && signupForm.get('email')?.errors">
+                                    <small *ngIf="signupForm.get('email')?.errors?.['required']" class="error-text">L'email est requis</small>
+                                    <small *ngIf="signupForm.get('email')?.errors?.['email']" class="error-text">L'email n'est pas valide</small>
+                                </div>
                             </div>
                             <div class="input-box">
                                 <i class="fas fa-lock"></i>
-                                <input type="password" formControlName="password" placeholder="Veuillez saisir votre mot de passe" required />
+                                <input type="password" formControlName="password"
+                                    placeholder="Veuillez saisir votre mot de passe" required />
+                                <div *ngIf="submitted && signupForm.get('password')?.errors">
+                                    <small *ngIf="signupForm.get('password')?.errors?.['required']" class="error-text">Le mot de passe est requis</small>
+                                    <small *ngIf="signupForm.get('password')?.errors?.['minlength']" class="error-text">Le mot de passe doit contenir au moins 4 caractères</small>
+                                </div>
                             </div>
                             <div class="input-box">
                                 <i class="fas fa-lock"></i>
-                                <input type="password" formControlName="confirmPassword" placeholder="Confirmer votre mot de passe" required />
-                            </div>
-                            Vous êtes :
-                            <div class="form-check-container custom-margin-left">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="userType" id="entrepreneur" value="entrepreneur" [(ngModel)]="userType">
-                                    <label class="form-check-label" for="entrepreneur">Entrepreneur</label>
-                                </div>
-                                <div class="form-check custom-margin-left">
-                                    <input class="form-check-input" type="radio" name="userType" id="etudiant" value="etudiant" [(ngModel)]="userType">
-                                    <label class="form-check-label" for="etudiant">Étudiant</label>
+                                <input type="password" formControlName="confirmPassword"
+                                    placeholder="Confirmer votre mot de passe" required />
+                                <div *ngIf="submitted && signupForm.get('confirmPassword')?.errors">
+                                    <small *ngIf="signupForm.get('confirmPassword')?.errors?.['required']" class="error-text">La confirmation du mot de passe est requise</small>
+                                    <small *ngIf="signupForm.errors?.['notMatching']" class="error-text">Les mots de passe ne correspondent pas</small>
                                 </div>
                             </div>
-                            
-                            <!-- Affichage des champs spécifiques -->
+                            Vous êtes
+                            <div class="form-check-container">
+                                <div class="form-check-container">
+                                    <input class="form-check-input" type="radio" formControlName="userType"
+                                        value="entrepreneur" (change)="onUserTypeChange($event)">
+                                    <div class="form-check-label">Entrepreneur</div>
+                                </div>
+                                <div class="form-check-container">
+                                    <input class="form-check-input" type="radio" formControlName="userType"
+                                        value="etudiant" (change)="onUserTypeChange($event)">
+                                    <div class="form-check-label">Étudiant</div>
+                                </div>
+                            </div>
+
+                            <!-- Champ pour entrepreneur -->
                             <div *ngIf="userType === 'entrepreneur'">
                                 <div class="input-box">
-                                    <i class="fas fa-building"></i>
-                                    <input type="text" formControlName="companyName" placeholder="Nom de l'entreprise" />
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <input type="text" formControlName="localisation" placeholder="Localisation" />
+                                    <div *ngIf="submitted && signupForm.get('localisation')?.errors">
+                                        <small *ngIf="signupForm.get('localisation')?.errors?.['required']" class="error-text">La localisation est requise</small>
+                                    </div>
+                                </div>
+                                <div class="input-box">
+                                    <i class="fas fa-industry"></i>
+                                    <input type="text" formControlName="secteur" placeholder="Secteur" />
+                                    <div *ngIf="submitted && signupForm.get('secteur')?.errors">
+                                        <small *ngIf="signupForm.get('secteur')?.errors?.['required']" class="error-text">Le secteur est requis</small>
+                                    </div>
+                                </div>
+                                <div class="input-box">
+                                    <i class=""></i>
+                                    <textarea formControlName="aboutUs" placeholder="À propos de nous"></textarea>
+                                    <div *ngIf="submitted && signupForm.get('aboutUs')?.errors">
+                                        <small *ngIf="signupForm.get('aboutUs')?.errors?.['required']" class="error-text">Ce champ est requis</small>
+                                    </div>
                                 </div>
                             </div>
-                            
+
+                            <!-- Champ pour étudiant -->
                             <div *ngIf="userType === 'etudiant'">
                                 <div class="input-box">
                                     <i class="fas fa-school"></i>
                                     <input type="text" formControlName="university" placeholder="Université" />
+                                    <div *ngIf="submitted && signupForm.get('university')?.errors">
+                                        <small *ngIf="signupForm.get('university')?.errors?.['required']" class="error-text">L'université est requise</small>
+                                    </div>
+                                </div>
+                                <div class="input-box">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <input type="text" formControlName="parcours" placeholder="Parcours" />
+                                    <div *ngIf="submitted && signupForm.get('parcours')?.errors">
+                                        <small *ngIf="signupForm.get('parcours')?.errors?.['required']" class="error-text">Le parcours est requis</small>
+                                    </div>
+                                </div>
+                                <div class="input-box">
+                                    <i class="fas fa-file-upload"></i>
+                                    <input type="file" formControlName="cvUrl" placeholder="Télécharger votre CV" />
+                                    <div *ngIf="submitted && signupForm.get('cvUrl')?.errors">
+                                        <small *ngIf="signupForm.get('cvUrl')?.errors?.['required']" class="error-text">Le CV est requis</small>
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <!-- Display the selected option immediately -->
-                            <div *ngIf="userType">
-                                <h3>You selected: {{ userType === 'entrepreneur' ? 'Entrepreneur' : 'Étudiant' }}</h3>
-                            </div>
+
                             <div class="button input-box">
                                 <input type="submit" value="Suivant" />
                             </div>
-                            <div class="text sign-up-text">Vous avez déjà un compte ? <label for="flip">Se connecter</label></div>
+                            <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+                            <div class="text sign-up-text">Vous avez déjà un compte ? <label for="flip">Se
+                                    connecter</label></div>
                         </div>
                     </form>
                 </div>
