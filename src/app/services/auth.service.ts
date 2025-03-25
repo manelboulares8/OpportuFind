@@ -23,8 +23,20 @@ export class AuthService {
   }
   
   
-  signUp(user: any, userType: string): Observable<any> {
+  /*signUp(user: any, userType: string): Observable<any> {
     const registerUrl = `${this.apiUrl}/register/${userType}`;
     return this.http.post<any>(registerUrl, user);
-  }
+  }*/
+    signUp(user: any, userType: string): Observable<any> {
+      const registerUrl = `${this.apiUrl}/register/${userType}`;
+      const formattedUser = {
+        full_name: user.fullName,
+        email: user.email,
+        university: user.university,
+        parcours: user.parcours,
+        cv_url: user.cvUrl,
+        password: user.password
+      };
+      return this.http.post<any>(registerUrl, formattedUser);
+    }
 }

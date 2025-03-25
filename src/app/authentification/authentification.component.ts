@@ -82,7 +82,7 @@ export class AuthentificationComponent {
       response => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Login successful' });
         // Handle successful login, like redirecting the user
-        this.router.navigate(['/dashboard']); // Adjust the route as needed
+        this.router.navigate(['/home']); // Adjust the route as needed
       },
       error => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Login failed, please try again' });
@@ -108,7 +108,7 @@ export class AuthentificationComponent {
       response => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Signup successful' });
         // Handle successful signup, like redirecting the user or showing a success message
-        this.router.navigate(['/login']); // Adjust the route as needed
+        this.router.navigate(['/authentification']); // Adjust the route as needed
       },
       error => {
         console.error('Error response:', error);
