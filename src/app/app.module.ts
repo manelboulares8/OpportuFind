@@ -17,8 +17,17 @@ import { TestimonialComponent } from './testimonial/testimonial.component';
 import { ErrorComponent } from './error/error.component'; // Assure-toi que ton AuthService est bien importé
 import { MessageService } from 'primeng/api';
 import { RouterModule } from '@angular/router';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Assure-toi que ce module est bien importé
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AjouterOffreComponent } from './ajouter-offre/ajouter-offre.component';
+import { ListerOffreComponent } from './lister-offre/lister-offre.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +39,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
     JobDetailComponent,
     JobListComponent,
     TestimonialComponent,
-    ErrorComponent
+    ErrorComponent,
+    AjouterOffreComponent,
+    ListerOffreComponent,
+    WelcomePageComponent,
+ 
+
   ],
   imports: [
     BrowserModule,
@@ -42,6 +56,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
     ToastModule,
       // Assure-toi que RouterModule est ici
       BrowserAnimationsModule,
+      HttpClientModule,
+      MatSidenavModule,
+      MatListModule,
+      MatFormFieldModule,
+      MatInputModule,
+      MatButtonModule,
+      MatIconModule,
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]
