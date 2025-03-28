@@ -28,6 +28,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { ModifierOffreComponent } from './modifier-offre/modifier-offre.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
     AjouterOffreComponent,
     ListerOffreComponent,
     WelcomePageComponent,
+    ModifierOffreComponent,
  
 
   ],
@@ -63,6 +66,13 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
       MatInputModule,
       MatButtonModule,
       MatIconModule,
+      ToastrModule.forRoot({ // Configuration globale de ngx-toastr
+        positionClass: 'toast-top-right', // Vous pouvez configurer la position et d'autres options ici
+        preventDuplicates: true,
+        timeOut: 3000,
+        closeButton: true,
+        progressBar: true
+      })
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

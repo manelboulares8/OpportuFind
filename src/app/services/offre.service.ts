@@ -7,7 +7,7 @@ import { Offre } from '../../model/offre.model';
   providedIn: 'root'
 })
 export class OffreService {
-  private apiUrl = 'http://localhost:8090/opportufind/api/offres'; // Remplace par ton URL backend
+  private apiUrl = 'http://localhost:8090/opportufind2/api/offres'; // Remplace par ton URL backend
 
   constructor(private http: HttpClient) {}
 
@@ -22,5 +22,13 @@ export class OffreService {
   // Méthode pour supprimer une offre
   deleteOffre(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+  getOffreById(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);
+  }
+
+  // Mettre à jour une offre
+  updateOffre(id: number, offreDetails: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, offreDetails);
   }
 }

@@ -13,7 +13,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #64d593;
+  background: #64b7d5;
   padding: 30px;
 }
 
@@ -25,7 +25,8 @@ body {
   padding: 40px 30px;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
   perspective: 2700px;
-  height:700px;
+  height:660px;
+ 
 }
 
 .container .cover {
@@ -128,7 +129,7 @@ body {
   position: relative;
   font-size: 24px;
   font-weight: 500;
-  color: #333;
+  color: #002a7f;
 }
 
 .forms .form-content .title:before {
@@ -138,7 +139,7 @@ body {
   bottom: 0;
   height: 3px;
   width: 25px;
-  background: #598666;
+  background: #002a7f;
 }
 
 .forms .signup-form .title:before {
@@ -172,19 +173,19 @@ body {
 
 .form-content .input-box input:focus,
 .form-content .input-box input:valid {
-  border-color: #598666;
+  border-color: #002a7f;
 }
 
 .form-content .input-box i {
   position: absolute;
-  color: #598666;
+  color: #002a7f;
   font-size: 17px;
 }
 
 .forms .form-content .text {
   font-size: 14px;
   font-weight: 500;
-  color: #000000;
+  color: #002a7f;
 }
 
 .forms .form-content .text a {
@@ -202,7 +203,7 @@ body {
 
 .forms .form-content .button input {
   color: #fff;
-  background: #598666;
+  background: #002a7f;
   border-radius: 6px;
   padding: 0;
   cursor: pointer;
@@ -210,11 +211,11 @@ body {
 }
 
 .forms .form-content .button input:hover {
-  background: #598666;
+  background: #002a7f;
 }
 
 .forms .form-content label {
-  color: #598666;
+  color: #002a7f;
   cursor: pointer;
 }
 
@@ -254,7 +255,7 @@ body {
     display: none;
   }
   .b{
-    color: #000000;
+    color: #002a7f;
     text-decoration: underline;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   }

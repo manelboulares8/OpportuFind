@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8090/opportufind/auth';
+  private apiUrl = 'http://localhost:8090/opportufind2/auth';
 
   constructor(private http: HttpClient) {}
 
@@ -16,7 +16,7 @@ export class AuthService {
       .set('password', credentials.password);
   
     // Use responseType: 'text' to tell Angular not to expect a JSON response
-    return this.http.post<any>('http://localhost:8090/opportufind/auth/login', null, { 
+    return this.http.post<any>('http://localhost:8090/opportufind2/auth/login', null, { 
       params, 
       responseType: 'text' as 'json' // Telling Angular to treat the response as a plain text string
     });
