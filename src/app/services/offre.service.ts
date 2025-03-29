@@ -23,6 +23,7 @@ export class OffreService {
   deleteOffre(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
+
   getOffreById(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/${id}`);
   }
@@ -30,5 +31,11 @@ export class OffreService {
   // Mettre à jour une offre
   updateOffre(id: number, offreDetails: any): Observable<any> {
     return this.http.put(`${this.apiUrl}/${id}`, offreDetails);
+  }
+  getOffresByEntrepreneur(id: number): Observable<Offre[]> {
+    return this.http.get<Offre[]>(`${this.apiUrl}/entrepreneur/${id}`);
+  }
+  getEntrepreneurIdByOfferId(idOffre: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/displayEntrepreneurId/${idOffre}`);
   }
 }

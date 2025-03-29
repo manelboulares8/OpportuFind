@@ -78,19 +78,52 @@ export class AuthentificationComponent {
       password: this.loginForm.value.password
     };
 
-    this.authService.login(loginCredentials).subscribe(
-      response => {
-        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Login successful' });
-        // Handle successful login, like redirecting the user
-        this.router.navigate(['/home']); // Adjust the route as needed
-      },
-      error => {
-        this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Login failed, please try again' });
-        console.error(error);
-      }
-    );
-  }
+    this.authService.login(loginCredentials).subscribe({
+      next: (token) => {
+        console.log('Login successful, token:', token);
+        localStorage.setItem('token', token);  // Store the token in localStorage
+        // Optionally, navigate to the next page
+        // Decode the token manually
+        const userId = this.decodeJwtToken(token);  // Extract the 'id' from the decoded token
+        console.log('User ID from token:', userId);  // Log the user ID to the console
+        
+        // Optionally, store the user ID or use it in your application logic
+        localStorage.setItem('userId', userId.toString()); // Store the user ID in localStorage
 
+        this.router.navigate(['/home']);
+      },
+      error: (err) => {
+        console.error('Login failed', err);
+        alert('Login failed. Please check your credentials.');
+      }
+    });    
+  }
+  decodeJwtToken(token: string): number {
+    // Split the JWT token into three parts
+    const parts = token.split('.');
+
+    // The payload is the second part of the token (index 1)
+    const payload = parts[1];
+
+    // Decode the base64url encoded payload
+    const decodedPayload = this.base64UrlDecode(payload);
+
+    // Parse the decoded payload into JSON
+    const parsedPayload = JSON.parse(decodedPayload);
+
+    // Return the user ID from the decoded payload
+    return parsedPayload.id;
+  }
+  base64UrlDecode(base64Url: string): string {
+    // Add necessary padding for base64 encoding
+    const padding = '='.repeat((4 - base64Url.length % 4) % 4);
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/') + padding;
+
+    // Decode base64 string and return it
+    return decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+  }
   // Signup method
   OnSignUpSubmit() {
     this.submitted = true;
@@ -107,8 +140,36 @@ export class AuthentificationComponent {
     this.authService.signUp(signupData, userType).subscribe(
       response => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Signup successful' });
-        // Handle successful signup, like redirecting the user or showing a success message
-        this.router.navigate(['/authentification']); // Adjust the route as needed
+        
+        // Call login after successful sign-up
+        const loginCredentials = {
+          email: this.signupForm.value.email,
+          password: this.signupForm.value.password
+        };
+        console.log(loginCredentials)
+
+    
+        this.authService.login(loginCredentials).subscribe({
+          next: (token) => {
+            console.log('Login successful, token:', token);
+            localStorage.setItem('token', token);  // Store the token in localStorage
+            // Optionally, navigate to the next page
+            // Decode the token manually
+            const userId = this.decodeJwtToken(token);  // Extract the 'id' from the decoded token
+            console.log('User ID from token:', userId);  // Log the user ID to the console
+            
+            // Optionally, store the user ID or use it in your application logic
+            localStorage.setItem('userId', userId.toString()); // Store the user ID in localStorage
+    
+            this.router.navigate(['/home']);
+          },
+          error: (err) => {
+            console.error('Login failed', err);
+            alert('Login failed. Please check your credentials.');
+          }
+        });    
+  
+        // Optionally navigate to home or another page after sign up
       },
       error => {
         console.error('Error response:', error);
@@ -123,35 +184,45 @@ export class AuthentificationComponent {
       }
     );
   }
+  
 
   // Handle user type selection change
-  onUserTypeChange(event: any) {
-    this.userType = event.target.value;
-    // Based on the user type selected, adjust the form validation and visibility
-    if (this.userType === 'etudiant') {
-      this.signupForm.get('university')?.setValidators([Validators.required]);
-      this.signupForm.get('parcours')?.setValidators([Validators.required]);
-      this.signupForm.get('cvUrl')?.setValidators([Validators.required]);
-      
-      this.signupForm.get('localisation')?.clearValidators();
-      this.signupForm.get('secteur')?.clearValidators();
-      this.signupForm.get('aboutUs')?.clearValidators();
-    } else if (this.userType === 'entrepreneur') {
-      this.signupForm.get('localisation')?.setValidators([Validators.required]);
-      this.signupForm.get('secteur')?.setValidators([Validators.required]);
-      this.signupForm.get('aboutUs')?.setValidators([Validators.required]);
+   // Handle user type selection change
+onUserTypeChange(event: any) {
+  this.userType = event.target.value;
+  
+  // Log the selected userType
+  console.log('Selected user type:', this.userType);
 
-      this.signupForm.get('university')?.clearValidators();
-      this.signupForm.get('parcours')?.clearValidators();
-      this.signupForm.get('cvUrl')?.clearValidators();
-    }
+  // Based on the user type selected, adjust the form validation and visibility
+  if (this.userType === 'etudiant') {
+    this.signupForm.get('university')?.setValidators([Validators.required]);
+    this.signupForm.get('parcours')?.setValidators([Validators.required]);
+    this.signupForm.get('cvUrl')?.setValidators([Validators.required]);
+    
+    this.signupForm.get('localisation')?.clearValidators();
+    this.signupForm.get('secteur')?.clearValidators();
+    this.signupForm.get('aboutUs')?.clearValidators();
+  } else if (this.userType === 'entrepreneur') {
+    this.signupForm.get('localisation')?.setValidators([Validators.required]);
+    this.signupForm.get('secteur')?.setValidators([Validators.required]);
+    this.signupForm.get('aboutUs')?.setValidators([Validators.required]);
 
-    // Revalidate fields
-    this.signupForm.get('university')?.updateValueAndValidity();
-    this.signupForm.get('parcours')?.updateValueAndValidity();
-    this.signupForm.get('cvUrl')?.updateValueAndValidity();
-    this.signupForm.get('localisation')?.updateValueAndValidity();
-    this.signupForm.get('secteur')?.updateValueAndValidity();
-    this.signupForm.get('aboutUs')?.updateValueAndValidity();
+    this.signupForm.get('university')?.clearValidators();
+    this.signupForm.get('parcours')?.clearValidators();
+    this.signupForm.get('cvUrl')?.clearValidators();
   }
+
+  // Revalidate fields
+  this.signupForm.get('university')?.updateValueAndValidity();
+  this.signupForm.get('parcours')?.updateValueAndValidity();
+  this.signupForm.get('cvUrl')?.updateValueAndValidity();
+  this.signupForm.get('localisation')?.updateValueAndValidity();
+  this.signupForm.get('secteur')?.updateValueAndValidity();
+  this.signupForm.get('aboutUs')?.updateValueAndValidity();
+
+  // Log the current values of the fields
+  console.log('Signup form values:', this.signupForm.value);
+}
+
 }
