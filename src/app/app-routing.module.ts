@@ -13,6 +13,7 @@ import { AjouterOffreComponent } from './ajouter-offre/ajouter-offre.component';
 import { ListerOffreComponent } from './lister-offre/lister-offre.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { ModifierOffreComponent } from './modifier-offre/modifier-offre.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 const routes: Routes = [
   { path: 'authentification', component: AuthentificationComponent }, 
   { path: 'home', component: HomeComponent }, // Ajoute cette ligne pour que 'home' fonctionne
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path:'welcome',component:WelcomePageComponent},
   { path: 'modifier/:id', component: ModifierOffreComponent },  
   { path: '', component: WelcomePageComponent }, // Route par défaut
+  {path:'profile',component:UserProfileComponent},
 
 ];
 

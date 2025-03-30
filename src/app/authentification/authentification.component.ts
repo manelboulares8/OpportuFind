@@ -225,4 +225,44 @@ onUserTypeChange(event: any) {
   console.log('Signup form values:', this.signupForm.value);
 }
 
+  goToJobList() {
+    this.router.navigate(['/job-list']);
+  }
+  goToJobDetail() {
+    this.router.navigate(['/job-detail']);
+  }
+  goToHome() {
+    this.router.navigate(['/home']);
+  }
+
+  goToAbout() {
+    this.router.navigate(['/about']);
+  }
+
+  goToAdd() {
+    this.router.navigate(['/ajouter-offre']);
+  }
+
+  
+
+  goToCategory() {
+    this.router.navigate(['/category']);
+  }
+
+  goToTestimonial() {
+    this.router.navigate(['/testimonial']);
+  }
+
+  goTo404() {
+    this.router.navigate(['/error']);
+  }
+
+  goToContact() {
+    this.router.navigate(['/contact']);
+  }
+
+  goToLogout() {
+    // Logique de déconnexion (si nécessaire)
+    this.router.navigate(['/logout']);
+  }
 }

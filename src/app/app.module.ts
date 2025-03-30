@@ -30,6 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { ModifierOffreComponent } from './modifier-offre/modifier-offre.component';
 import { ToastrModule } from 'ngx-toastr';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { ToastrModule } from 'ngx-toastr';
     ListerOffreComponent,
     WelcomePageComponent,
     ModifierOffreComponent,
+    UserProfileComponent,
  
 
   ],

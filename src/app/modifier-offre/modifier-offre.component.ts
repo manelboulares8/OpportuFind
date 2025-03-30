@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OffreService } from '../services/offre.service';
 import { ToastrService } from 'ngx-toastr'; // Si tu utilises Toastr pour les notifications
+import { UserService } from '../services/user.service';
+import { User } from '../../model/user.model';
 
 @Component({
   selector: 'app-modifier-offre',
@@ -19,7 +21,8 @@ export class ModifierOffreComponent implements OnInit{
     private offreService: OffreService,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private userService:UserService
   ) {
     this.jobPostForm = this.fb.group({
       titre: ['', Validators.required],
@@ -30,10 +33,32 @@ export class ModifierOffreComponent implements OnInit{
     });
   }
 
-  ngOnInit(): void {
-    this.offreId = +this.route.snapshot.paramMap.get('id')!; // Récupérer l'ID de l'URL
+ 
+    user!: User;
+    userRole: 'entrepreneur' | 'etudiant' = 'entrepreneur'; // Default role
+     ngOnInit(): void {
+      this.offreId = +this.route.snapshot.paramMap.get('id')!; // Récupérer l'ID de l'URL
     this.loadOffreDetails(this.offreId);
-  }
+       this.userService.getUserProfile().subscribe({
+         next: (data) => {
+           console.log('User data fetched:', data);
+           this.user = data; // Store the user profile data
+           console.log(data.role);
+   
+           // Vérifiez la valeur exacte du rôle retourné par le service
+           if (data.role === 'ROLE_ENTREPRENEUR') {
+             this.userRole = 'entrepreneur';
+           } else if (data.role === 'ROLE_ETUDIANT') {
+             this.userRole = 'etudiant';
+           }
+   
+           console.log('Rôle détecté:', this.userRole); // Log the detected role
+         },
+         error: (err) => {
+           console.error('Error loading user profile:', err);
+         }
+       });
+     }
 
   // Charger les détails de l'offre dans le formulaire
   loadOffreDetails(id: number): void {
@@ -69,4 +94,45 @@ export class ModifierOffreComponent implements OnInit{
       }
     );
   }
+  
+    goToJobList() {
+      this.router.navigate(['/job-list']);
+    }
+    goToJobDetail() {
+      this.router.navigate(['/job-detail']);
+    }
+    goToHome() {
+      this.router.navigate(['/home']);
+    }
+  
+    goToAbout() {
+      this.router.navigate(['/about']);
+    }
+  
+    goToAdd() {
+      this.router.navigate(['/ajouter-offre']);
+    }
+  
+    
+  
+    goToCategory() {
+      this.router.navigate(['/category']);
+    }
+  
+    goToTestimonial() {
+      this.router.navigate(['/testimonial']);
+    }
+  
+    goTo404() {
+      this.router.navigate(['/error']);
+    }
+  
+    goToContact() {
+      this.router.navigate(['/contact']);
+    }
+  
+    goToLogout() {
+      // Logique de déconnexion (si nécessaire)
+      this.router.navigate(['/logout']);
+    }
 }

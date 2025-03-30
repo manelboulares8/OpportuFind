@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OffreService } from '../services/offre.service'; // Ensure the path is correct
 import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
+import { User } from '../../model/user.model';
 
 @Component({
   selector: 'app-ajouter-offre',
@@ -12,13 +14,16 @@ import { Router } from '@angular/router';
 })
 export class AjouterOffreComponent implements OnInit {
   jobPostForm!: FormGroup; // Declare the form group
-
+user!: User;
+   userRole: 'entrepreneur' | 'etudiant' = 'entrepreneur'; // Default role
   constructor(
     private fb: FormBuilder, 
     private offreService: OffreService,
-    private router: Router
+    private router: Router,
+    private userService :UserService
   ) {}
 
+ 
   ngOnInit(): void {
     // Initialize the form with validations
     this.jobPostForm = this.fb.group({
@@ -28,8 +33,25 @@ export class AjouterOffreComponent implements OnInit {
       date: ['', Validators.required],
       description: ['', Validators.required]
     });
-  }
+    this.userService.getUserProfile().subscribe({
+      next: (data) => {
+        console.log('User data fetched:', data);
+        this.user = data; // Store the user profile data
+        console.log(data.role);
 
+        // Vérifiez la valeur exacte du rôle retourné par le service
+        if (data.role === 'ROLE_ENTREPRENEUR') {
+          this.userRole = 'entrepreneur';
+        } else if (data.role === 'ROLE_ETUDIANT') {
+          this.userRole = 'etudiant';
+        }
+
+        console.log('Rôle détecté:', this.userRole); // Log the detected role
+      },
+      error: (err) => {
+        console.error('Error loading user profile:', err);
+      }
+    });}
   // Method to extract the Entrepreneur ID from the JWT token
   private extractEntrepreneurId(token: string): string | null {
     try {
@@ -84,4 +106,45 @@ export class AjouterOffreComponent implements OnInit {
       console.log('Invalid form');
     }
   }
+  
+    goToJobList() {
+      this.router.navigate(['/job-list']);
+    }
+    goToJobDetail() {
+      this.router.navigate(['/job-detail']);
+    }
+    goToHome() {
+      this.router.navigate(['/home']);
+    }
+  
+    goToAbout() {
+      this.router.navigate(['/about']);
+    }
+  
+    goToAdd() {
+      this.router.navigate(['/ajouter-offre']);
+    }
+  
+    
+  
+    goToCategory() {
+      this.router.navigate(['/category']);
+    }
+  
+    goToTestimonial() {
+      this.router.navigate(['/testimonial']);
+    }
+  
+    goTo404() {
+      this.router.navigate(['/error']);
+    }
+  
+    goToContact() {
+      this.router.navigate(['/contact']);
+    }
+  
+    goToLogout() {
+      // Logique de déconnexion (si nécessaire)
+      this.router.navigate(['/logout']);
+    }
 }
