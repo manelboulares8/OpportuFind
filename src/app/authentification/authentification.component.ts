@@ -81,16 +81,28 @@ export class AuthentificationComponent {
     this.authService.login(loginCredentials).subscribe({
       next: (token) => {
         console.log('Login successful, token:', token);
-        localStorage.setItem('token', token);  // Store the token in localStorage
-        // Optionally, navigate to the next page
-        // Decode the token manually
+        localStorage.setItem('token', token);  
+          // Si c'est un token fictif, on ne le décode pas
+      if (token === 'admin-token') {
+        const userId = 0;  // Utilise un ID par défaut pour l'admin
+        console.log('User ID from token:', userId);
+        localStorage.setItem('userId', userId.toString());  // Stocke l'ID de l'admin
+
+        // Le rôle de l'admin est stocké directement
+        localStorage.setItem('role', 'ADMIN');
+      } else {
         const userId = this.decodeJwtToken(token);  // Extract the 'id' from the decoded token
         console.log('User ID from token:', userId);  // Log the user ID to the console
         
         // Optionally, store the user ID or use it in your application logic
         localStorage.setItem('userId', userId.toString()); // Store the user ID in localStorage
-
-        this.router.navigate(['/home']);
+      }
+        const role = localStorage.getItem('role');
+      if (role === 'ADMIN') {
+        this.router.navigate(['/dashboard']);  // Redirige vers le tableau de bord de l'admin
+      } else {
+        this.router.navigate(['/home']);  // Redirige vers la page d'accueil pour un autre utilisateur
+      }
       },
       error: (err) => {
         console.error('Login failed', err);
@@ -125,7 +137,7 @@ export class AuthentificationComponent {
     }).join(''));
   }
   // Signup method
-  OnSignUpSubmit() {
+   OnSignUpSubmit() {
     this.submitted = true;
   
     if (this.signupForm.invalid) {
@@ -183,8 +195,8 @@ export class AuthentificationComponent {
         }
       }
     );
-  }
-  
+  } 
+
 
   // Handle user type selection change
    // Handle user type selection change
@@ -232,7 +244,7 @@ onUserTypeChange(event: any) {
     this.router.navigate(['/job-detail']);
   }
   goToHome() {
-    this.router.navigate(['/home']);
+    this.router.navigate(['/welcome']);
   }
 
   goToAbout() {
@@ -262,7 +274,7 @@ onUserTypeChange(event: any) {
   }
 
   goToLogout() {
-    // Logique de déconnexion (si nécessaire)
-    this.router.navigate(['/logout']);
+    localStorage.clear(); // supprime tout ce qui est dans localStorage
+    this.router.navigate(['/welcome']); // redirection vers la page de login
   }
 }

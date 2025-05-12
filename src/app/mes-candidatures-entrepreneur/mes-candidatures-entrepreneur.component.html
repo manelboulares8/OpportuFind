@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>OpportuFind</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="../../assets/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="../../assets/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="../../assets/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="../../assets/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-xxl bg-white p-0">
+       
+<!-- Navbar Start -->
+<nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+    <a href="index.html" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
+        <h1 class="m-0 text-primary">OpportuFind</h1>
+    </a>
+    <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav ms-auto p-4 p-lg-0">
+            <button (click)="goToHome()" class="nav-item nav-link">Home</button>
+
+            <a href="/about" class="nav-item nav-link">About</a>
+
+            <!-- Condition pour afficher le lien "Publier une offre" pour les entrepreneurs -->
+
+
+            <!-- Dropdown pour Opportunités -->
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Opportunités</a>
+                <div class="dropdown-menu rounded-0 m-0">
+                    
+                    <div *ngIf="userRole === 'etudiant'">
+                        <button (click)="goToListerCandidaturesetu()" class="dropdown-item">Lister mes Candidatures</button>
+                        <button (click)="goToJobList()" class="dropdown-item">Liste des stages disponibles</button>
+
+
+                    </div>
+                    <div *ngIf="userRole === 'entrepreneur'">
+                        <button (click)="goToListerCandidatures()" class="dropdown-item">Lister Candidatures reçues</button>
+                    <button (click)="goToListerMesOffres()" class="dropdown-item">Lister Mes Offres</button>
+                        <button (click)="goToAdd()" class="dropdown-item">Publier une offre</button>
+                    </div>
+                    <button (click)="goToJobDetail()" class="dropdown-item">Détails</button>
+                    
+             
+        
+                </div>
+            </div>
+
+            <!-- Dropdown pour Pages -->
+            <div class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                <div class="dropdown-menu rounded-0 m-0">
+                    <button (click)="goToCategory()" class="dropdown-item">Job Category</button>
+                    <button (click)="goToTestimonial()" class="dropdown-item">Testimonial</button>
+                    <button (click)="goTo404()" class="dropdown-item">404</button>
+                </div>
+            </div>
+
+            <button (click)="goToContact()" class="nav-item nav-link">Contact</button>
+            <button (click)="goToProfile()" class="nav-item nav-link">Profil</button>
+
+        </div>
+
+        <button (click)="goToLogout()" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">
+            Se déconnecter<i class="fa fa-sign-out-alt ms-3"></i>
+        </button>
+    </div>
+</nav>
+<!-- Navbar End -->
+<div class="container-xxl bg-white p-0">
+    <!-- Header -->
+    <div class="container-xxl py-5 bg-dark page-header mb-5">
+        <div class="container my-5 pt-5 pb-4">
+            <h1 class="display-3 text-white mb-3 animated slideInDown">Candidatures reçues</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb text-uppercase">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Pages</a></li>
+                    <li class="breadcrumb-item text-white active" aria-current="page">Candidatures reçues</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Tableau des candidatures -->
+    <div class="container">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID Candidature</th>
+                        <th>Nom Étudiant</th>
+                        <th>Email Étudiant</th>
+                        <th>CV</th>
+                        <th>Offre</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let candidature of candidatures">
+                        <td>{{ candidature.idCandidature }}</td>
+                        <td>{{ candidature.etudiant?.fullName || 'Non disponible' }}</td>
+                        <td>
+                        <a href="mailto:{{ candidature.etudiant?.email }}">
+                            {{ candidature.etudiant?.email || 'Non disponible' }}
+                        </a>
+                    </td>
+                    
+                    <!-- Lien de téléchargement du CV -->
+                    <td>
+                        <div *ngIf="candidature.etudiant.cvUrl">
+                            <button class="btn btn-sm btn-outline-primary" 
+                                    (click)="downloadCV(candidature.etudiant.cvUrl)">
+                                <i class="fas fa-download me-1"></i> Télécharger CV
+                            </button>
+                            <small class="d-block text-muted">
+                                {{ getFileName(candidature.etudiant.cvUrl!) }}
+                            </small>
+                        </div>
+                        <div *ngIf="!candidature.etudiant.cvUrl">
+                            <span class="text-muted">Aucun CV</span>
+                        </div>
+                    </td>
+                        <td>{{ candidature.offre?.titre || 'Non disponible' }}</td>
+                        <td>
+                            <select class="form-select form-select-sm" 
+                                    [(ngModel)]="candidature.status">
+                                <option value="PENDING">En attente</option>
+                                <option value="ACCEPTED">Accepté</option>
+                                <option value="REJECTED">Rejeté</option>
+                            </select>
+                            <div *ngIf="candidature.status === 'ACCEPTED'" class="mt-2">
+                                <label class="form-label">Date de recrutement :</label>
+                                <input type="datetime-local" 
+                                       class="form-control form-control-sm"
+                                       [(ngModel)]="candidature.recruitmentDate"
+                                       name="recruitmentDate" />
+                            </div>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger btn-sm me-2" 
+                                    (click)="supprimerCandidature(candidature.idCandidature)">
+                                Supprimer
+                            </button>
+                            <button class="btn btn-primary btn-sm me-2"
+                                    (click)="onStatusChange(candidature)">
+                                Valider
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div *ngIf="candidatures.length === 0" class="alert alert-info mt-3">
+            Aucune candidature trouvée.
+        </div>
+    </div>
+</div>
+            </div>
+
+<!-- Ajout de jQuery, Popper.js et Bootstrap JS dans le bon ordre -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script> <!-- jQuery complet -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script> <!-- Popper.js -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> <!-- Bootstrap JS -->
+</body>
+</html>

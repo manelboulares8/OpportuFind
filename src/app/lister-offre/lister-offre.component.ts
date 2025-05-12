@@ -145,7 +145,29 @@ export class ListerOffreComponent implements OnInit {
     }
   
     goToLogout() {
-      // Logique de déconnexion (si nécessaire)
-      this.router.navigate(['/logout']);
+      localStorage.clear(); // supprime tout ce qui est dans localStorage
+      this.router.navigate(['/welcome']); // redirection vers la page de login
     }
+    
+  goToMy() {
+    this.router.navigate(['/lister-offre']);
+  }
+goToProfile(){
+  this.router.navigate(['/profile']);
+
+}
+goToListerCandidatures() {
+  this.router.navigate(['/lister-candidaturesEntr']);
+}
+goToListerCandidaturesetu() {
+  this.router.navigate(['/lister-candidaturesEtu']);
+}
+
+goToListerMesOffres() {
+  this.router.navigate(['/lister-offre']);
+}
+  
+
+
+
 }

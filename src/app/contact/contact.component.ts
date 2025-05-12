@@ -13,7 +13,7 @@ export class ContactComponent {
 constructor(private router: Router,private userService:UserService) {}
 
    user!: User;
-   userRole: 'entrepreneur' | 'etudiant' = 'entrepreneur'; // Default role
+   userRole: 'entrepreneur' | 'etudiant' | 'none' = 'none'; // Default role
     ngOnInit(): void {
       this.userService.getUserProfile().subscribe({
         next: (data) => {
@@ -42,7 +42,14 @@ constructor(private router: Router,private userService:UserService) {}
     this.router.navigate(['/job-detail']);
   }
   goToHome() {
-    this.router.navigate(['/home']);
+    // Vérifie le rôle de l'utilisateur
+    if (this.userRole === 'etudiant' || this.userRole === 'entrepreneur') {
+      // Redirige vers /home si l'utilisateur a un rôle valide
+      this.router.navigate(['/home']);
+    } else {
+      // Sinon, redirige vers /welcome
+      this.router.navigate(['/welcome']);
+    }
   }
 
   goToAbout() {

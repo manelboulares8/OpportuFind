@@ -31,6 +31,14 @@ import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { ModifierOffreComponent } from './modifier-offre/modifier-offre.component';
 import { ToastrModule } from 'ngx-toastr';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { ListerCandidatureComponent } from './lister-candidature/lister-candidature.component';
+import { MesCandidaturesEtudiantComponent } from './mes-candidatures-etudiant/mes-candidatures-etudiant.component';
+import { MesCandidaturesEntrepreneurComponent } from './mes-candidatures-entrepreneur/mes-candidatures-entrepreneur.component';
+import { DashboardComponent } from './admin/dashboard/dashboard.component';
+import { OffresComponent } from './admin/offres/offres.component';
+import { CandidaturesComponent } from './admin/candidatures/candidatures.component';
+import { EtudiantsComponent } from './admin/etudiants/etudiants.component';
+import { EntrepreneursComponent } from './admin/entrepreneurs/entrepreneurs.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +56,14 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     WelcomePageComponent,
     ModifierOffreComponent,
     UserProfileComponent,
+    ListerCandidatureComponent,
+    MesCandidaturesEtudiantComponent,
+    MesCandidaturesEntrepreneurComponent,
+    OffresComponent,
+    CandidaturesComponent,
+    EtudiantsComponent,
+    EntrepreneursComponent,
+    
  
 
   ],

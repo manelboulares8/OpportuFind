@@ -7,7 +7,7 @@ import { Offre } from '../../model/offre.model';
   providedIn: 'root'
 })
 export class OffreService {
-  private apiUrl = 'http://localhost:8090/opportufind2/api/offres'; // Remplace par ton URL backend
+  private apiUrl = 'http://localhost:8090/opportufind/api/offres'; // Remplace par ton URL backend
 
   constructor(private http: HttpClient) {}
 

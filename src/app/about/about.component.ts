@@ -18,9 +18,8 @@ constructor(private router: Router,private userService: UserService) {}
   goToJobDetail() {
     this.router.navigate(['/job-detail']);
   }
-  goToHome() {
-    this.router.navigate(['/home']);
-  }
+
+  
 
   goToAbout() {
     this.router.navigate(['/about']);
@@ -49,12 +48,13 @@ constructor(private router: Router,private userService: UserService) {}
   }
 
   goToLogout() {
-    // Logique de déconnexion (si nécessaire)
-    this.router.navigate(['/logout']);
+    localStorage.clear(); // supprime tout ce qui est dans localStorage
+    this.router.navigate(['/welcome']); // redirection vers la page de login
   }
    
    user!: User;
-   userRole: 'entrepreneur' | 'etudiant' = 'entrepreneur'; // Default role
+   userRole: 'entrepreneur' | 'etudiant' | 'none' = 'none'; // Default role
+
     ngOnInit(): void {
       this.userService.getUserProfile().subscribe({
         next: (data) => {
@@ -75,5 +75,19 @@ constructor(private router: Router,private userService: UserService) {}
           console.error('Error loading user profile:', err);
         }
       });
+    }
+    goToHome() {
+      // Vérifie le rôle de l'utilisateur
+      if (this.userRole === 'etudiant' || this.userRole === 'entrepreneur') {
+        // Redirige vers /home si l'utilisateur a un rôle valide
+        this.router.navigate(['/home']);
+      } else {
+        // Sinon, redirige vers /welcome
+        this.router.navigate(['/welcome']);
+      }
+    }
+    goToProfile(){
+      this.router.navigate(['/profile']);
+    
     }
 }

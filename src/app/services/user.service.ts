@@ -28,11 +28,11 @@ export class UserService {
   
     // Fetch user data based on role
     if (role === 'ROLE_ENTREPRENEUR') {
-      return this.http.get(`http://localhost:8090/opportufind2/api/entrepreneurs/${id}`).pipe(
+      return this.http.get(`http://localhost:8090/opportufind/api/entrepreneurs/${id}`).pipe(
         map((userData: any) => ({ ...userData, role })) // Add role to the user data
       );
     } else if (role === 'ROLE_ETUDIANT') {
-      return this.http.get(`http://localhost:8090/opportufind2/api/${id}`).pipe(
+      return this.http.get(`http://localhost:8090/opportufind/api/etudiants/${id}`).pipe(
         map((userData: any) => ({ ...userData, role })) // Add role to the user data
       );
     } else {
@@ -82,4 +82,30 @@ export class UserService {
       return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
   }
+  updateUserProfile(updatedUser: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('Token not found in local storage');
+      return of({ message: 'No token found' });
+    }
+
+    const decodedToken = this.decodeJwtToken(token); // Decode the token
+    const role = decodedToken.role;
+
+    // Send the updated user data to the appropriate endpoint based on role
+    if (role === 'ROLE_ENTREPRENEUR') {
+      return this.http.put(`http://localhost:8090/opportufind/api/entrepreneurs`, updatedUser);
+    } else if (role === 'ROLE_ETUDIANT') {
+      return this.http.put(`http://localhost:8090/opportufind/api/etudiants`, updatedUser);
+    } else {
+      return of({ message: 'Role not supported for update' });
+    }
+  }
+    getAllEtudiants(): Observable<User[]> {
+    return this.http.get<User[]>(`http://localhost:8090/opportufind/api/etudiants`);
+  }
+  getAllEntrepreneurs(): Observable<User[]> {
+    return this.http.get<User[]>(`http://localhost:8090/opportufind/api/entrepreneurs`);
+  }
+  
 }
